@@ -1,0 +1,21 @@
+---
+interface Props {
+  title?: string;
+  class?: string;
+}
+const { title = "zsh", class: className = "" } = Astro.props;
+---
+
+<div
+  class={`overflow-hidden border border-line-bright bg-term-2 shadow-2xl shadow-black/40 ${className}`}
+>
+  <div class="flex items-center gap-2 border-b border-line px-4 py-2.5">
+    <span class="h-3 w-3 rounded-full bg-[#ff5f56]"></span>
+    <span class="h-3 w-3 rounded-full bg-[#ffbd2e]"></span>
+    <span class="h-3 w-3 rounded-full bg-[#27c93f]"></span>
+    <span class="ml-2 text-xs text-dim">{title}</span>
+  </div>
+  <div class="overflow-x-auto p-5 text-[0.82rem] leading-relaxed text-fg">
+    <slot />
+  </div>
+</div>

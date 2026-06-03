@@ -1,0 +1,339 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Terminal from "../components/Terminal.astro";
+
+const repo = "https://github.com/nugehs/repoctx";
+const docs = "https://nugehs.github.io/repoctx/";
+
+const wordmark = [
+  " ____   _____   ____    ___    ____   _____  __  __",
+  "|  _ \\ | ____| |  _ \\  / _ \\  / ___| |_   _| \\ \\/ /",
+  "| |_) ||  _|   | |_) || | | || |       | |    \\  /",
+  "|  _ < | |___  |  __/ | |_| || |___    | |    /  \\",
+  "|_| \\_\\|_____| |_|     \\___/  \\____|   |_|   /_/\\_\\",
+].join("\n");
+
+const pillars = [
+  {
+    n: "01",
+    title: "context",
+    color: "text-blue",
+    glow: "hover:border-blue/40",
+    body: "Task-aware packets before an agent plans or edits — primary files, related files, tests, patterns, and the exact validation commands.",
+    cmd: 'repoctx context "add a new MCP tool"',
+  },
+  {
+    n: "02",
+    title: "tests",
+    color: "text-green",
+    glow: "hover:border-green/40",
+    body: "Every packet surfaces the matching tests and the repo's own quality gate, so changes ship with the checks that prove them.",
+    cmd: "repoctx harness . --out harness.md",
+  },
+  {
+    n: "03",
+    title: "permissions",
+    color: "text-cyan",
+    glow: "hover:border-cyan/40",
+    body: "Scoped to the smallest owner files that actually need to move. Code owners and protected-branch rules stay in the loop.",
+    cmd: "repoctx impact src/lib/pr-review.js",
+  },
+  {
+    n: "04",
+    title: "review",
+    color: "text-yellow",
+    glow: "hover:border-yellow/40",
+    body: "PR review context from local diffs and GitHub comments — changed files, risk prompts, review targets, merge-readiness.",
+    cmd: "repoctx pr . --base origin/main",
+  },
+  {
+    n: "05",
+    title: "evidence",
+    color: "text-purple",
+    glow: "hover:border-purple/40",
+    body: "Deterministic, local-first reports you can keep. Durable Markdown and JSON artifacts instead of disposable model guesses.",
+    cmd: "repoctx report . --out report.md",
+  },
+];
+
+const features = [
+  { g: "text-blue", t: "discover & index", b: "Find repo roots under any directory and build local .dev-context indexes. No cloud, no upload." },
+  { g: "text-green", t: "ast code maps", b: "JSON-first maps of files, domains, imports, exports, symbols, and routes — parsed with the TS compiler." },
+  { g: "text-cyan", t: "search across repos", b: "Rank matches by path, domain, route, controller, imports, exports, and symbols across your catalog." },
+  { g: "text-yellow", t: "agent harnesses", b: "Generate setup, validation, and runtime commands as the first artifact an agent or CI reads." },
+  { g: "text-orange", t: "pr review packs", b: "Turn a git diff into review targets, risk flags, and verification commands — posted as a sticky comment." },
+  { g: "text-purple", t: "token-aware", b: "Every artifact estimates its own context-token footprint. Never blow an agent's window by accident." },
+  { g: "text-red", t: "multi-repo workspaces", b: "One product-level report across related repos — web, API, and everything wired between them." },
+  { g: "text-blue", t: "github actions ready", b: "Scaffold a review workflow into any repo with one init, generating PR context on every pull request." },
+];
+
+const mcpTools = [
+  "repo_inspect", "repo_map", "context_pack", "change_impact",
+  "merge_readiness", "pr_merge_readiness", "review_pr", "repo_harness",
+  "workspace_report", "pr_review", "find_domain", "find_backend_route",
+];
+---
+
+<Layout>
+  <span id="top"></span>
+
+  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <section class="bg-cells relative">
+    <div class="mx-auto max-w-6xl px-5 pt-14 pb-10 lg:pt-20">
+      <!-- boot line -->
+      <p class="mb-6 text-[0.75rem] text-faint">
+        <span class="text-green">●</span> repoctx v1.3.1 · node · 100% local-first
+        · MIT
+      </p>
+
+      <!-- hero terminal -->
+      <div class="panel overflow-hidden shadow-2xl shadow-black/50">
+        <div class="flex items-center gap-2 border-b border-line px-4 py-2.5">
+          <span class="h-3 w-3 rounded-full bg-[#ff5f56]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#ffbd2e]"></span>
+          <span class="h-3 w-3 rounded-full bg-[#27c93f]"></span>
+          <span class="ml-2 text-xs text-dim">repoctx — ~/projects</span>
+        </div>
+
+        <div class="px-5 py-8 sm:px-8 sm:py-10">
+          <div class="overflow-x-auto">
+            <pre
+              class="seam-text inline-block text-[0.5rem] leading-[1.15] font-bold sm:text-[0.7rem] md:text-[0.95rem]">{wordmark}</pre>
+          </div>
+
+          <p class="mt-6 text-sm text-fg-bright sm:text-base">
+            <span class="text-blue">▸</span> repository context, mapped locally.
+          </p>
+          <p class="mt-3 max-w-2xl text-[0.85rem] leading-relaxed text-dim sm:text-sm">
+            A local-first CLI and MCP server that turns a repository into
+            deterministic context for coding agents and reviewers — before they
+            plan, edit, or merge. No cloud. No guessing. Just your repo, mapped.
+          </p>
+
+          <div class="mt-7 text-[0.85rem] sm:text-sm">
+            <span class="text-green">$</span>
+            <span class="text-fg-bright"> repoctx context </span>
+            <span class="text-yellow">"add a new MCP tool"</span>
+            <span class="cursor ml-1 align-text-bottom"></span>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-3 text-[0.85rem]">
+            <a
+              href="#install"
+              class="inline-flex items-center gap-2 border border-green/50 bg-green/10 px-4 py-2.5 font-semibold text-green transition-colors hover:bg-green/20"
+            >
+              <span>[</span> install repoctx <span>]</span>
+            </a>
+            <a
+              href={docs}
+              class="inline-flex items-center gap-2 border border-line-bright px-4 py-2.5 font-semibold text-fg transition-colors hover:border-blue/60 hover:text-blue"
+            >
+              <span>[</span> read the docs <span>]</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- live context example -->
+      <p class="mt-12 mb-3 text-[0.8rem] text-dim">
+        <span class="text-faint">//</span> a context pack, generated locally in
+        milliseconds
+      </p>
+      <Terminal title="repoctx — context">
+        <pre class="whitespace-pre"><span class="text-dim"># task-aware context, fully deterministic</span>
+<span class="text-green">$</span> repoctx context <span class="text-yellow">"add a new MCP tool"</span>
+
+<span class="text-cyan">▸ intent</span>      add · mcp, tool, server
+<span class="text-cyan">▸ primary</span>     src/lib/mcp.js
+              src/cli.js
+<span class="text-cyan">▸ related</span>     src/lib/context-engine.js
+              src/lib/repo.js
+<span class="text-green">▸ tests</span>       tests/context-engine.test.js  <span class="text-green">✓</span>
+<span class="text-purple">▸ pattern</span>     register command → add handler → update help
+<span class="text-yellow">▸ verify</span>      npm run ci
+
+<span class="text-dim">  ~4,088 context tokens · 100% local · 0 network calls</span></pre>
+      </Terminal>
+    </div>
+  </section>
+
+  <!-- ─────────────────── Positioning strip ─────────────────── -->
+  <section class="border-y border-line bg-term-2">
+    <div class="mx-auto max-w-6xl px-5 py-6">
+      <p class="text-center text-[0.72rem] tracking-wider text-dim">
+        <span class="text-faint">$</span> works with
+        <span class="text-blue">claude-code</span> ·
+        <span class="text-green">codex-cli</span> ·
+        <span class="text-cyan">cursor</span> ·
+        <span class="text-yellow">vscode</span> ·
+        <span class="text-purple">ollama</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Trust layer ─────────────────────── -->
+  <section id="trust" class="mx-auto max-w-6xl px-5 py-20">
+    <p class="text-[0.8rem] text-dim">
+      <span class="text-faint">//</span> <span class="text-blue">trust-layer</span>
+    </p>
+    <h2 class="mt-3 max-w-2xl text-2xl leading-snug font-bold text-fg-bright sm:text-3xl">
+      Five things an agent has to get right
+    </h2>
+    <p class="mt-3 max-w-2xl text-[0.9rem] leading-relaxed text-dim">
+      repoctx turns a repository into a trust layer with five durable parts.
+      Each one is deterministic, inspectable, and produced from your code — not
+      a model's memory.
+    </p>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        pillars.map((p) => (
+          <div class={`panel group p-6 transition-colors ${p.glow}`}>
+            <div class="flex items-baseline justify-between">
+              <h3 class={`text-lg font-bold ${p.color}`}>
+                <span class="text-faint">▸</span> {p.title}
+              </h3>
+              <span class="text-xs text-faint">[{p.n}]</span>
+            </div>
+            <p class="mt-3 text-[0.83rem] leading-relaxed text-dim">{p.body}</p>
+            <div class="mt-5 border-t border-line pt-3 text-[0.75rem] text-fg">
+              <span class="text-green">$</span> {p.cmd}
+            </div>
+          </div>
+        ))
+      }
+      <div class="panel flex flex-col justify-center border-dashed p-6">
+        <pre class="text-[0.78rem] leading-relaxed text-dim">{`context
+  └─ tests
+      └─ permissions
+          └─ review
+              └─ `}<span class="text-purple">evidence</span></pre>
+        <p class="mt-4 text-[0.8rem] text-faint">
+          one loop, kept honest every session.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Features ────────────────────────── -->
+  <section id="features" class="border-y border-line bg-term-2">
+    <div class="mx-auto max-w-6xl px-5 py-20">
+      <p class="text-[0.8rem] text-dim">
+        <span class="text-faint">//</span>
+        <span class="text-green">features</span>
+      </p>
+      <h2 class="mt-3 max-w-2xl text-2xl leading-snug font-bold text-fg-bright sm:text-3xl">
+        One CLI for the whole repo-context job
+      </h2>
+      <p class="mt-3 max-w-2xl text-[0.9rem] leading-relaxed text-dim">
+        It doesn't replace your editor or your model. It gives developers and
+        agents a single, scriptable source of truth about the code in front of
+        them.
+      </p>
+
+      <div class="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        {
+          features.map((f) => (
+            <div class="bg-term p-5 transition-colors hover:bg-panel">
+              <h3 class={`text-[0.9rem] font-bold ${f.g}`}>
+                <span class="text-faint">▸</span> {f.t}
+              </h3>
+              <p class="mt-2 text-[0.78rem] leading-relaxed text-dim">{f.b}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── MCP section ─────────────────────── -->
+  <section id="mcp" class="mx-auto max-w-6xl px-5 py-20">
+    <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.05fr]">
+      <div>
+        <p class="text-[0.8rem] text-dim">
+          <span class="text-faint">//</span>
+          <span class="text-cyan">mcp-server</span>
+        </p>
+        <h2 class="mt-3 text-2xl leading-snug font-bold text-fg-bright sm:text-3xl">
+          Wire it straight into your agent
+        </h2>
+        <p class="mt-3 text-[0.9rem] leading-relaxed text-dim">
+          <span class="text-fg-bright">repoctx mcp</span> starts a stdio MCP
+          server that exposes repoctx as agent-callable tools, with a persisted
+          repo-index cache that refreshes when files change.
+        </p>
+
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {
+            mcpTools.map((t) => (
+              <li class="border border-line bg-term-2 px-2.5 py-1 text-[0.72rem] text-dim">
+                {t}
+              </li>
+            ))
+          }
+        </ul>
+
+        <a
+          href={docs}
+          class="tlink mt-7 inline-block text-[0.85rem]"
+        >
+          → host config for claude · cursor · vscode
+        </a>
+      </div>
+
+      <Terminal title="claude_desktop_config.json">
+        <pre class="whitespace-pre">{`{
+  `}<span class="text-cyan">"mcpServers"</span>{`: {
+    `}<span class="text-cyan">"repoctx"</span>{`: {
+      `}<span class="text-green">"command"</span>{`: `}<span class="text-yellow">"npx"</span>{`,
+      `}<span class="text-green">"args"</span>{`: [`}<span class="text-yellow">"-y"</span>{`, `}<span class="text-yellow">"@nugehs/repoctx"</span>{`, `}<span class="text-yellow">"mcp"</span>{`]
+    }
+  }
+}`}</pre>
+      </Terminal>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Install / CTA ───────────────────── -->
+  <section id="install" class="border-t border-line bg-cells">
+    <div class="mx-auto max-w-4xl px-5 py-20 text-center">
+      <pre class="seam-text mx-auto inline-block text-[0.4rem] leading-[1.15] font-bold sm:text-[0.55rem]">{wordmark}</pre>
+
+      <h2 class="mt-8 text-2xl leading-snug font-bold text-fg-bright sm:text-3xl">
+        Give your agents context they can trust
+      </h2>
+      <p class="mx-auto mt-3 max-w-xl text-[0.9rem] leading-relaxed text-dim">
+        Install globally, or run it once with npx. Then point your agent at it.
+      </p>
+
+      <div class="mx-auto mt-9 max-w-2xl space-y-2.5 text-left text-[0.85rem]">
+        <div class="panel flex items-center gap-3 px-4 py-3">
+          <span class="text-green select-none">$</span>
+          <span class="text-fg-bright">npm install -g @nugehs/repoctx</span>
+        </div>
+        <div class="panel flex items-center gap-3 px-4 py-3">
+          <span class="text-green select-none">$</span>
+          <span class="text-fg-bright"
+            >repoctx context <span class="text-yellow">"your task"</span> --path
+            .</span
+          >
+        </div>
+      </div>
+
+      <div class="mt-9 flex flex-wrap justify-center gap-3 text-[0.85rem]">
+        <a
+          href={repo}
+          class="inline-flex items-center gap-2 border border-green/50 bg-green/10 px-4 py-2.5 font-semibold text-green transition-colors hover:bg-green/20"
+        >
+          <span>[</span> star on github <span>]</span>
+        </a>
+        <a
+          href={docs}
+          class="inline-flex items-center gap-2 border border-line-bright px-4 py-2.5 font-semibold text-fg transition-colors hover:border-blue/60 hover:text-blue"
+        >
+          <span>[</span> read the docs <span>]</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

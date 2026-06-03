@@ -1,0 +1,51 @@
+---
+const nav = [
+  { label: "trust-layer", href: "#trust" },
+  { label: "features", href: "#features" },
+  { label: "mcp", href: "#mcp" },
+  { label: "install", href: "#install" },
+];
+const repo = "https://github.com/nugehs/repoctx";
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-line bg-term/90 backdrop-blur-md"
+>
+  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
+    <a href="#top" class="flex items-center gap-2.5">
+      <img src="/logo.svg" alt="" width="26" height="26" />
+      <span class="text-sm font-bold tracking-tight text-fg-bright">
+        <span class="text-dim">~/</span>repoctx
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 md:flex">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class="text-[0.8rem] text-dim transition-colors hover:text-fg-bright"
+          >
+            <span class="text-faint">#</span>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href={repo}
+        class="hidden text-[0.8rem] text-dim transition-colors hover:text-fg-bright sm:inline"
+        >github</a
+      >
+      <a
+        href="#install"
+        class="group inline-flex items-center gap-1.5 border border-green/50 bg-green/10 px-3 py-1.5 text-[0.8rem] font-semibold text-green transition-colors hover:bg-green/20"
+      >
+        <span class="text-green">$</span> get-started
+      </a>
+    </div>
+  </div>
+  <div class="seam h-px w-full opacity-60"></div>
+</header>
