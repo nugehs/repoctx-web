@@ -54,34 +54,39 @@ const pillars = [
     title: "review",
     color: "text-yellow",
     glow: "hover:border-yellow/40",
-    body: "PR review context from local diffs and GitHub comments — changed files, risk prompts, review targets, merge-readiness.",
-    cmd: "repoctx pr . --base origin/main",
+    body: "Impact, review context, and the merge gate in one call — changed files, risk prompts, CODEOWNERS, branch protection, and a ship / no-ship verdict with a confidence score.",
+    cmd: "repoctx review . --base origin/main",
   },
   {
     n: "05",
     title: "evidence",
     color: "text-purple",
     glow: "hover:border-purple/40",
-    body: "Deterministic, local-first reports you can keep. Durable Markdown and JSON artifacts instead of disposable model guesses.",
+    body: "Deterministic, local-first artifacts you can keep — context packs, AX and convergence scores, and merge verdicts as durable Markdown or JSON, not disposable model guesses.",
     cmd: "repoctx report . --out report.md",
   },
 ];
 
 const features = [
   { g: "text-blue", t: "discover & index", b: "Find repo roots under any directory and build local .dev-context indexes. No cloud, no upload." },
-  { g: "text-green", t: "ast code maps", b: "JSON-first maps of files, domains, imports, exports, symbols, and routes — parsed with the TS compiler." },
-  { g: "text-cyan", t: "search across repos", b: "Rank matches by path, domain, route, controller, imports, exports, and symbols across your catalog." },
+  { g: "text-green", t: "ast code maps", b: "JSON-first maps of files, domains, imports, exports, symbols, and routes across 8 languages — JS/TS, Go, Python, Java, C#, Ruby, Rust." },
+  { g: "text-cyan", t: "search across repos", b: "Rank matches by path, domain, route, controller, imports, exports, and symbols across your whole catalog." },
   { g: "text-yellow", t: "agent harnesses", b: "Generate setup, validation, and runtime commands as the first artifact an agent or CI reads." },
-  { g: "text-orange", t: "pr review packs", b: "Turn a git diff into review targets, risk flags, and verification commands — posted as a sticky comment." },
-  { g: "text-purple", t: "token-aware", b: "Every artifact estimates its own context-token footprint. Never blow an agent's window by accident." },
-  { g: "text-red", t: "multi-repo workspaces", b: "One product-level report across related repos — web, API, and everything wired between them." },
-  { g: "text-blue", t: "github actions ready", b: "Scaffold a review workflow into any repo with one init, generating PR context on every pull request." },
+  { g: "text-orange", t: "merge gates", b: "One ship / no-ship verdict for a local diff or a GitHub PR — secret safety, risk paths, CODEOWNERS, branch protection, release discipline." },
+  { g: "text-purple", t: "agent-experience score", b: "AX 0–100: how cheap and safe is this change? Blends changeability, blast radius, guardrails, and clarity." },
+  { g: "text-red", t: "convergence score", b: "Score 0–100 for how far the diff drifted from the stated task — coverage, scope, and risk alignment, with a recomputable receipt." },
+  { g: "text-blue", t: "usage dashboard", b: "A local, self-contained HTML dashboard of usage and performance from opt-in telemetry. No server, off by default." },
+  { g: "text-green", t: "pr review packs", b: "Turn a git diff into review targets, risk flags, and verification commands — posted as a sticky comment." },
+  { g: "text-cyan", t: "token-aware", b: "Every artifact estimates its own context-token footprint. Never blow an agent's window by accident." },
+  { g: "text-yellow", t: "multi-repo workspaces", b: "One product-level report across related repos — web, API, and everything wired between them." },
+  { g: "text-orange", t: "github actions ready", b: "repoctx init scaffolds a CI quality gate, a PR-review workflow, and an optional pre-commit hook into any repo." },
 ];
 
 const mcpTools = [
-  "repo_inspect", "repo_map", "context_pack", "change_impact",
-  "merge_readiness", "pr_merge_readiness", "review_pr", "repo_harness",
-  "workspace_report", "pr_review", "find_domain", "find_backend_route",
+  "repo_inspect", "repo_map", "repo_index", "repo_search",
+  "context_pack", "change_impact", "agent_experience", "convergence_score",
+  "review_context", "review_gate", "review_verdict", "workspace_report",
+  "repo_harness",
 ];
 ---
 
@@ -117,8 +122,9 @@ const mcpTools = [
           </p>
           <p class="mt-3 max-w-2xl text-[0.85rem] leading-relaxed text-dim sm:text-sm">
             A local-first CLI and MCP server that turns a repository into
-            deterministic context for coding agents and reviewers — before they
-            plan, edit, or merge. No cloud. No guessing. Just your repo, mapped.
+            deterministic context for coding agents and reviewers — it maps what
+            a change touches, scores how cheap and safe it is, and gates merge
+            readiness. No cloud. No guessing. Just your repo, mapped.
           </p>
 
           <div class="mt-7 text-[0.85rem] sm:text-sm">
@@ -224,6 +230,24 @@ const mcpTools = [
         </p>
       </div>
     </div>
+
+    <!-- gate verdict demo -->
+    <p class="mt-12 mb-3 text-[0.8rem] text-dim">
+      <span class="text-faint">//</span> the loop ends in a verdict — deterministic,
+      from your diff
+    </p>
+    <Terminal title="repoctx — gate">
+      <pre class="whitespace-pre"><span class="text-dim"># deterministic merge gate — local diff or a GitHub PR</span>
+<span class="text-green">$</span> repoctx gate <span class="text-fg-bright">.</span>
+
+<span class="text-cyan">▸ changed</span>     9 files · 2 risk paths flagged
+<span class="text-green">▸ secrets</span>     none detected             <span class="text-green">✓</span>
+<span class="text-cyan">▸ owners</span>      CODEOWNERS · 2 required reviewers
+<span class="text-yellow">▸ release</span>     version + changelog in sync
+<span class="text-green">▸ verdict</span>     PASS  <span class="text-green">✓</span>  safe to open a PR
+
+<span class="text-dim">  add --pr 477 to gate a GitHub PR · 100% local by default</span></pre>
+    </Terminal>
   </section>
 
   <!-- ───────────────────── Features ────────────────────────── -->
@@ -270,7 +294,8 @@ const mcpTools = [
         </h2>
         <p class="mt-3 text-[0.9rem] leading-relaxed text-dim">
           <span class="text-fg-bright">repoctx mcp</span> starts a stdio MCP
-          server that exposes repoctx as agent-callable tools, with a persisted
+          server that exposes repoctx as agent-callable tools — context, impact,
+          AX and convergence scores, and merge gates — with a persisted
           repo-index cache that refreshes when files change.
         </p>
 
