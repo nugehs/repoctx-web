@@ -5,14 +5,16 @@ import Terminal from "../components/Terminal.astro";
 const repo = "https://github.com/nugehs/repoctx";
 const docs = "https://nugehs.github.io/repoctx/";
 
-// Resolve the published version at build time; fall back if offline.
-let version = "1.3.3";
-try {
-  const res = await fetch("https://registry.npmjs.org/@nugehs/repoctx/latest");
-  if (res.ok) version = (await res.json()).version;
-} catch {
-  /* keep fallback */
+// Resolve the published version at build time from the npm registry.
+// Fail the build if it can't be resolved, so a stale or incorrect version is
+// never deployed — the previous successful deploy stays live instead.
+const res = await fetch("https://registry.npmjs.org/@nugehs/repoctx/latest");
+if (!res.ok) {
+  throw new Error(
+    `Could not resolve repoctx version from npm (HTTP ${res.status})`,
+  );
 }
+const { version } = (await res.json()) as { version: string };
 
 const wordmark = [
   " ____   _____   ____    ___    ____   _____  __  __",

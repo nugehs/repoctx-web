@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Rebuild daily so the site re-fetches the latest published repoctx
+    # version even when a release lands without a push to this repo.
+    - cron: "0 6 * * *"
 
 permissions:
   contents: read
