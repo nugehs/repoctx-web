@@ -1,0 +1,140 @@
+---
+import "../styles/global.css";
+
+const siteRoot = import.meta.env.BASE_URL;
+const repo = "https://github.com/BASHBOP/otito";
+const npm = "https://www.npmjs.com/package/@bashbop/otito";
+
+const metrics = [
+  { label: "invocations", value: "0", detail: "0 cli · 0 mcp" },
+  { label: "median latency", value: "—", detail: "no timing yet" },
+  { label: "token savings vs naive", value: "—", detail: "run `otito eval`" },
+  { label: "gate pass rate", value: "—", detail: "0 warn · 0 fail" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={siteRoot + "/favicon.svg"} />
+    <meta name="theme-color" content="#0d1117" />
+    <meta
+      name="description"
+      content="A public, data-free preview of the Òtítọ́ local usage and performance dashboard."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Òtítọ́ dashboard preview" />
+    <meta
+      property="og:description"
+      content="See the local-first Òtítọ́ dashboard without publishing any telemetry."
+    />
+    <meta property="og:site_name" content="Òtítọ́" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Òtítọ́ dashboard preview</title>
+  </head>
+  <body class="bg-scan min-h-screen bg-term antialiased">
+    <header class="border-b border-line bg-term/90 backdrop-blur-md">
+      <div class="mx-auto flex min-h-14 max-w-5xl items-center justify-between gap-4 px-5 py-3">
+        <a href={siteRoot} class="flex items-center gap-2.5">
+          <img src={siteRoot + "/logo.svg"} alt="" width="26" height="26" />
+          <span class="text-sm font-bold tracking-tight text-fg-bright"><span class="text-dim">~/</span>otito</span>
+        </a>
+        <span class="border border-yellow/40 bg-yellow/10 px-2.5 py-1 text-[0.68rem] font-semibold tracking-wide text-yellow">PUBLIC PREVIEW</span>
+      </div>
+    </header>
+
+    <main class="bg-cells">
+      <div class="mx-auto max-w-5xl px-5 py-10 sm:py-14">
+        <p class="text-[0.76rem] text-dim"><span class="text-faint">//</span> no local telemetry has been published</p>
+        <div class="mt-3 flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-fg-bright sm:text-3xl">Òtítọ́ <span class="text-dim">/</span> dashboard</h1>
+            <p class="mt-2 max-w-2xl text-[0.86rem] leading-relaxed text-dim">
+              This is the real dashboard’s first-run state: data-free by design. On a developer’s machine, usage stays local and only appears after telemetry is explicitly enabled.
+            </p>
+          </div>
+          <a class="tlink text-[0.8rem]" href={siteRoot}>← back to product</a>
+        </div>
+
+        <section aria-labelledby="dashboard-title" class="mt-8 overflow-hidden border border-line-bright bg-[#10151c] shadow-2xl shadow-black/30">
+          <div class="flex items-center gap-2 border-b border-line bg-term-2 px-4 py-2.5">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f56]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#27c93f]"></span>
+            <span class="ml-2 text-[0.7rem] text-dim">Òtítọ́ — dashboard preview</span>
+          </div>
+
+          <div class="p-4 sm:p-6">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h2 id="dashboard-title" class="text-base font-semibold text-fg-bright">otito · usage &amp; performance</h2>
+                <p class="mt-1 text-[0.72rem] text-dim">@bashbop/otito · no data yet</p>
+              </div>
+              <div class="flex flex-wrap gap-2 text-[0.68rem]">
+                <span class="border border-green/40 bg-green/10 px-2 py-1 text-green">local-only</span>
+                <span class="border border-line px-2 py-1 text-dim">0 repos</span>
+                <span class="border border-line px-2 py-1 text-dim">0 events</span>
+              </div>
+            </div>
+
+            <dl class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {metrics.map((metric) => (
+                <div class="border border-line bg-panel px-4 py-3.5">
+                  <dt class="text-[0.68rem] text-dim">{metric.label} <span class="text-faint" aria-hidden="true">ⓘ</span></dt>
+                  <dd class="mt-1.5 text-2xl font-semibold text-fg-bright">{metric.value}</dd>
+                  <p class="mt-1 text-[0.68rem] text-faint">{metric.detail}</p>
+                </div>
+              ))}
+            </dl>
+
+            <div class="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+              <section class="border border-line bg-panel p-4">
+                <h3 class="text-[0.78rem] font-semibold text-fg">top commands &amp; tools <span class="text-faint" aria-hidden="true">ⓘ</span></h3>
+                <p class="mt-4 text-[0.74rem] text-faint">No commands recorded yet.</p>
+              </section>
+              <section class="border border-line bg-panel p-4">
+                <h3 class="text-[0.78rem] font-semibold text-fg">merge-gate verdicts <span class="text-faint" aria-hidden="true">ⓘ</span></h3>
+                <p class="mt-4 text-[0.74rem] text-faint">No merge-gate runs recorded yet.</p>
+              </section>
+              <section class="border border-line bg-panel p-4">
+                <h3 class="text-[0.78rem] font-semibold text-fg">convergence over time <span class="text-faint" aria-hidden="true">ⓘ</span></h3>
+                <p class="mt-4 text-[0.74rem] text-faint">No convergence runs recorded yet.</p>
+              </section>
+              <section class="border border-line bg-panel p-4">
+                <h3 class="text-[0.78rem] font-semibold text-fg">recent artifacts <span class="text-faint" aria-hidden="true">ⓘ</span></h3>
+                <p class="mt-4 text-[0.74rem] text-faint">This public preview intentionally includes no local artifacts.</p>
+              </section>
+              <section class="border border-line bg-panel p-4 md:col-span-2">
+                <h3 class="text-[0.78rem] font-semibold text-fg">recent activity <span class="text-faint" aria-hidden="true">ⓘ</span></h3>
+                <p class="mt-4 text-[0.74rem] text-faint">Live dashboards read the selected repository locally. This preview does not load a repository or publish its history.</p>
+              </section>
+            </div>
+
+            <section class="mt-3 border border-yellow/30 bg-yellow/5 p-4" aria-labelledby="privacy-title">
+              <h3 id="privacy-title" class="text-[0.78rem] font-semibold text-yellow">what this preview cannot show</h3>
+              <ul class="mt-2 space-y-1.5 pl-4 text-[0.73rem] leading-relaxed text-dim">
+                <li>Usage, latency, merge verdicts, and artifacts appear only on the developer’s own machine.</li>
+                <li>Telemetry is opt-in, local-only, and off by default.</li>
+                <li>This page is a visual preview, not a shared dashboard or analytics service.</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-[0.78rem]">
+          <a class="tlink" href={repo}>view source on GitHub →</a>
+          <a class="tlink" href={npm}>install from npm →</a>
+          <span class="text-faint">local evidence, no account required</span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
