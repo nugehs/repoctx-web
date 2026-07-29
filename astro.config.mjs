@@ -3,10 +3,10 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
-// Hosted as a GitHub Pages project site at https://nugehs.github.io/repoctx-web/
+// Hosted as a GitHub Pages project site at https://bashbop.github.io/otito-web/
 export default defineConfig({
-  site: "https://nugehs.github.io",
-  base: "/repoctx-web",
+  site: "https://bashbop.github.io",
+  base: "/otito-web",
   vite: {
     plugins: [tailwindcss()],
   },

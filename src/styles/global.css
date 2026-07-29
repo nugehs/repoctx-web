@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
-/* ── repoctx brand · terminal-native ────────────────────────────────────
+/* ── Òtítọ́ brand · terminal-native ─────────────────────────────────────
    The whole site IS the terminal. Mono everything, dark canvas, the CLI's
    own GitHub-dark syntax palette (the same stops as the rainbow wordmark).
-   Original to repoctx. */
+   Original to Òtítọ́. */
 @theme {
   /* terminal canvas */
   --color-term: #0d1117;

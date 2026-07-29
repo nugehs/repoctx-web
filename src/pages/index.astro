@@ -2,26 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import Terminal from "../components/Terminal.astro";
 
-const repo = "https://github.com/nugehs/repoctx";
-const docs = "https://nugehs.github.io/repoctx/";
-
-// Resolve the published version at build time from the npm registry.
-// Fail the build if it can't be resolved, so a stale or incorrect version is
-// never deployed — the previous successful deploy stays live instead.
-const res = await fetch("https://registry.npmjs.org/@nugehs/repoctx/latest");
-if (!res.ok) {
-  throw new Error(
-    `Could not resolve repoctx version from npm (HTTP ${res.status})`,
-  );
-}
-const { version } = (await res.json()) as { version: string };
+const repo = "https://github.com/BASHBOP/otito";
+const docs = "https://github.com/BASHBOP/otito/tree/main/docs";
 
 const wordmark = [
-  " ____   _____   ____    ___    ____   _____  __  __",
-  "|  _ \\ | ____| |  _ \\  / _ \\  / ___| |_   _| \\ \\/ /",
-  "| |_) ||  _|   | |_) || | | || |       | |    \\  /",
-  "|  _ < | |___  |  __/ | |_| || |___    | |    /  \\",
-  "|_| \\_\\|_____| |_|     \\___/  \\____|   |_|   /_/\\_\\",
+  "  ___ _____ ___ _____ ___",
+  " / _ \\_   _|_ _|_   _/ _ \\",
+  "| | | || |  | |  | || | | |",
+  "| |_| || |  | |  | || |_| |",
+  " \\___/ |_| |___| |_| \\___/",
 ].join("\n");
 
 const pillars = [
@@ -31,7 +20,7 @@ const pillars = [
     color: "text-blue",
     glow: "hover:border-blue/40",
     body: "Task-aware packets before an agent plans or edits — primary files, related files, tests, patterns, and the exact validation commands.",
-    cmd: 'repoctx context "add a new MCP tool"',
+    cmd: 'otito context "add a new MCP tool"',
   },
   {
     n: "02",
@@ -39,7 +28,7 @@ const pillars = [
     color: "text-green",
     glow: "hover:border-green/40",
     body: "Every packet surfaces the matching tests and the repo's own quality gate, so changes ship with the checks that prove them.",
-    cmd: "repoctx harness . --out harness.md",
+    cmd: "otito harness . --out .otito/harness.md",
   },
   {
     n: "03",
@@ -47,7 +36,7 @@ const pillars = [
     color: "text-cyan",
     glow: "hover:border-cyan/40",
     body: "Scoped to the smallest owner files that actually need to move. Code owners and protected-branch rules stay in the loop.",
-    cmd: "repoctx impact src/lib/pr-review.js",
+    cmd: "otito impact src/lib/pr-review.js",
   },
   {
     n: "04",
@@ -55,7 +44,7 @@ const pillars = [
     color: "text-yellow",
     glow: "hover:border-yellow/40",
     body: "Impact, review context, and the merge gate in one call — changed files, risk prompts, CODEOWNERS, branch protection, and a ship / no-ship verdict with a confidence score.",
-    cmd: "repoctx review . --base origin/main",
+    cmd: "otito review . --base origin/main",
   },
   {
     n: "05",
@@ -63,12 +52,12 @@ const pillars = [
     color: "text-purple",
     glow: "hover:border-purple/40",
     body: "Deterministic, local-first artifacts you can keep — context packs, AX and convergence scores, and merge verdicts as durable Markdown or JSON, not disposable model guesses.",
-    cmd: "repoctx report . --out report.md",
+    cmd: "otito report . --out .otito/report.md",
   },
 ];
 
 const features = [
-  { g: "text-blue", t: "discover & index", b: "Find repo roots under any directory and build local .dev-context indexes. No cloud, no upload." },
+  { g: "text-blue", t: "discover & index", b: "Find repo roots under any directory and build local .otito indexes. No cloud, no upload." },
   { g: "text-green", t: "ast code maps", b: "JSON-first maps of files, domains, imports, exports, symbols, and routes across 8 languages — JS/TS, Go, Python, Java, C#, Ruby, Rust." },
   { g: "text-cyan", t: "search across repos", b: "Rank matches by path, domain, route, controller, imports, exports, and symbols across your whole catalog." },
   { g: "text-yellow", t: "agent harnesses", b: "Generate setup, validation, and runtime commands as the first artifact an agent or CI reads." },
@@ -79,7 +68,7 @@ const features = [
   { g: "text-green", t: "pr review packs", b: "Turn a git diff into review targets, risk flags, and verification commands — posted as a sticky comment." },
   { g: "text-cyan", t: "token-aware", b: "Every artifact estimates its own context-token footprint. Never blow an agent's window by accident." },
   { g: "text-yellow", t: "multi-repo workspaces", b: "One product-level report across related repos — web, API, and everything wired between them." },
-  { g: "text-orange", t: "github actions ready", b: "repoctx init scaffolds a CI quality gate, a PR-review workflow, and an optional pre-commit hook into any repo." },
+  { g: "text-orange", t: "github actions ready", b: "otito init scaffolds a CI quality gate, a PR-review workflow, and an optional pre-commit hook into any repo." },
 ];
 
 const mcpTools = [
@@ -98,8 +87,7 @@ const mcpTools = [
     <div class="mx-auto max-w-6xl px-5 pt-14 pb-10 lg:pt-20">
       <!-- boot line -->
       <p class="mb-6 text-[0.75rem] text-faint">
-        <span class="text-green">●</span> repoctx v{version} · node · 100% local-first
-        · MIT
+        <span class="text-green">●</span> Òtítọ́ · node · 100% local-first · MIT
       </p>
 
       <!-- hero terminal -->
@@ -108,7 +96,7 @@ const mcpTools = [
           <span class="h-3 w-3 rounded-full bg-[#ff5f56]"></span>
           <span class="h-3 w-3 rounded-full bg-[#ffbd2e]"></span>
           <span class="h-3 w-3 rounded-full bg-[#27c93f]"></span>
-          <span class="ml-2 text-xs text-dim">repoctx — ~/projects</span>
+          <span class="ml-2 text-xs text-dim">Òtítọ́ — ~/projects</span>
         </div>
 
         <div class="px-5 py-8 sm:px-8 sm:py-10">
@@ -129,7 +117,7 @@ const mcpTools = [
 
           <div class="mt-7 text-[0.85rem] sm:text-sm">
             <span class="text-green">$</span>
-            <span class="text-fg-bright"> repoctx context </span>
+            <span class="text-fg-bright"> otito context </span>
             <span class="text-yellow">"add a new MCP tool"</span>
             <span class="cursor ml-1 align-text-bottom"></span>
           </div>
@@ -139,7 +127,7 @@ const mcpTools = [
               href="#install"
               class="inline-flex items-center gap-2 border border-green/50 bg-green/10 px-4 py-2.5 font-semibold text-green transition-colors hover:bg-green/20"
             >
-              <span>[</span> install repoctx <span>]</span>
+            <span>[</span> start from source <span>]</span>
             </a>
             <a
               href={docs}
@@ -156,9 +144,9 @@ const mcpTools = [
         <span class="text-faint">//</span> a context pack, generated locally in
         milliseconds
       </p>
-      <Terminal title="repoctx — context">
+      <Terminal title="Òtítọ́ — context">
         <pre class="whitespace-pre"><span class="text-dim"># task-aware context, fully deterministic</span>
-<span class="text-green">$</span> repoctx context <span class="text-yellow">"add a new MCP tool"</span>
+<span class="text-green">$</span> otito context <span class="text-yellow">"add a new MCP tool"</span>
 
 <span class="text-cyan">▸ intent</span>      add · mcp, tool, server
 <span class="text-cyan">▸ primary</span>     src/lib/mcp.js
@@ -197,7 +185,7 @@ const mcpTools = [
       Five things an agent has to get right
     </h2>
     <p class="mt-3 max-w-2xl text-[0.9rem] leading-relaxed text-dim">
-      repoctx turns a repository into a trust layer with five durable parts.
+      otito turns a repository into a trust layer with five durable parts.
       Each one is deterministic, inspectable, and produced from your code — not
       a model's memory.
     </p>
@@ -236,9 +224,9 @@ const mcpTools = [
       <span class="text-faint">//</span> the loop ends in a verdict — deterministic,
       from your diff
     </p>
-    <Terminal title="repoctx — gate">
+    <Terminal title="Òtítọ́ — gate">
       <pre class="whitespace-pre"><span class="text-dim"># deterministic merge gate — local diff or a GitHub PR</span>
-<span class="text-green">$</span> repoctx gate <span class="text-fg-bright">.</span>
+<span class="text-green">$</span> otito gate <span class="text-fg-bright">.</span>
 
 <span class="text-cyan">▸ changed</span>     9 files · 2 risk paths flagged
 <span class="text-green">▸ secrets</span>     none detected             <span class="text-green">✓</span>
@@ -293,8 +281,8 @@ const mcpTools = [
           Wire it straight into your agent
         </h2>
         <p class="mt-3 text-[0.9rem] leading-relaxed text-dim">
-          <span class="text-fg-bright">repoctx mcp</span> starts a stdio MCP
-          server that exposes repoctx as agent-callable tools — context, impact,
+          <span class="text-fg-bright">otito mcp</span> starts a stdio MCP
+          server that exposes Òtítọ́ as agent-callable tools — context, impact,
           AX and convergence scores, and merge gates — with a persisted
           repo-index cache that refreshes when files change.
         </p>
@@ -320,9 +308,9 @@ const mcpTools = [
       <Terminal title="claude_desktop_config.json">
         <pre class="whitespace-pre">{`{
   `}<span class="text-cyan">"mcpServers"</span>{`: {
-    `}<span class="text-cyan">"repoctx"</span>{`: {
-      `}<span class="text-green">"command"</span>{`: `}<span class="text-yellow">"npx"</span>{`,
-      `}<span class="text-green">"args"</span>{`: [`}<span class="text-yellow">"-y"</span>{`, `}<span class="text-yellow">"@nugehs/repoctx"</span>{`, `}<span class="text-yellow">"mcp"</span>{`]
+    `}<span class="text-cyan">"otito"</span>{`: {
+      `}<span class="text-green">"command"</span>{`: `}<span class="text-yellow">"node"</span>{`,
+      `}<span class="text-green">"args"</span>{`: [`}<span class="text-yellow">"/absolute/path/to/otito/src/cli.js"</span>{`, `}<span class="text-yellow">"mcp"</span>{`]
     }
   }
 }`}</pre>
@@ -339,19 +327,18 @@ const mcpTools = [
         Give your agents context they can trust
       </h2>
       <p class="mx-auto mt-3 max-w-xl text-[0.9rem] leading-relaxed text-dim">
-        Install globally, or run it once with npx. Then point your agent at it.
+        Start from source while npm publication is pending. Then point your agent at it.
       </p>
 
       <div class="mx-auto mt-9 max-w-2xl space-y-2.5 text-left text-[0.85rem]">
         <div class="panel flex items-center gap-3 px-4 py-3">
           <span class="text-green select-none">$</span>
-          <span class="text-fg-bright">npm install -g @nugehs/repoctx</span>
+          <span class="text-fg-bright">git clone https://github.com/BASHBOP/otito.git</span>
         </div>
         <div class="panel flex items-center gap-3 px-4 py-3">
           <span class="text-green select-none">$</span>
           <span class="text-fg-bright"
-            >repoctx context <span class="text-yellow">"your task"</span> --path
-            .</span
+            >cd otito && npm ci && node src/cli.js context <span class="text-yellow">"your task"</span> --path .</span
           >
         </div>
       </div>
