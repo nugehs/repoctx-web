@@ -1,9 +1,9 @@
 {
-  "name": "repoctx-web",
+  "name": "otito-web",
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "Marketing site for repoctx — local-first repository context for agents and reviewers.",
+  "description": "Marketing site for Òtítọ́ — deterministic repository evidence for agents and reviewers.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
